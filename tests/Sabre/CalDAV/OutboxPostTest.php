@@ -1,17 +1,18 @@
 <?php
 
-namespace Sabre\CalDAV\Schedule;
-
+namespace Sabre\CalDAV;
 use Sabre\HTTP;
 use Sabre\VObject;
 use Sabre\DAV;
+
+require_once 'Sabre/DAVServerTest.php';
+require_once 'Sabre/CalDAV/Schedule/IMip/Mock.php';
 
 class OutboxPostTest extends \Sabre\DAVServerTest {
 
     protected $setupCalDAV = true;
     protected $setupACL = true;
     protected $autoLogin = 'user1';
-    protected $setupCalDAVScheduling = true;
 
     function testPostPassThruNotFound() {
 
@@ -317,9 +318,9 @@ class OutboxPostTest extends \Sabre\DAVServerTest {
 
         $req->setBody(implode("\r\n",$body));
 
-        $handler = new IMip\Mock('server@example.org');
+        $handler = new Schedule\IMip\Mock('server@example.org');
 
-        $this->caldavSchedulePlugin->setIMIPhandler($handler);
+        $this->caldavPlugin->setIMIPhandler($handler);
 
         $response = $this->request($req);
         $this->assertEquals('200 OK', $response->status);
@@ -369,9 +370,9 @@ class OutboxPostTest extends \Sabre\DAVServerTest {
 
         $req->setBody(implode("\r\n",$body));
 
-        $handler = new IMip\Mock('server@example.org');
+        $handler = new Schedule\IMip\Mock('server@example.org');
 
-        $this->caldavSchedulePlugin->setIMIPhandler($handler);
+        $this->caldavPlugin->setIMIPhandler($handler);
 
         $response = $this->request($req);
         $this->assertEquals('200 OK', $response->status, 'Full body: ' . $response->body);
@@ -420,9 +421,9 @@ class OutboxPostTest extends \Sabre\DAVServerTest {
 
         $req->setBody(implode("\r\n",$body));
 
-        $handler = new IMip\Mock('server@example.org');
+        $handler = new Schedule\IMip\Mock('server@example.org');
 
-        $this->caldavSchedulePlugin->setIMIPhandler($handler);
+        $this->caldavPlugin->setIMIPhandler($handler);
 
         $response = $this->request($req);
         $this->assertEquals('200 OK', $response->status);
@@ -471,9 +472,9 @@ class OutboxPostTest extends \Sabre\DAVServerTest {
 
         $req->setBody(implode("\r\n",$body));
 
-        $handler = new IMip\Mock('server@example.org');
+        $handler = new Schedule\IMip\Mock('server@example.org');
 
-        $this->caldavSchedulePlugin->setIMIPhandler($handler);
+        $this->caldavPlugin->setIMIPhandler($handler);
         $this->assertHTTPStatus(200, $req);
 
         $this->assertEquals(array(
@@ -513,9 +514,9 @@ class OutboxPostTest extends \Sabre\DAVServerTest {
 
         $req->setBody(implode("\r\n",$body));
 
-        $handler = new IMip\Mock('server@example.org');
+        $handler = new Schedule\IMip\Mock('server@example.org');
 
-        $this->caldavSchedulePlugin->setIMIPhandler($handler);
+        $this->caldavPlugin->setIMIPhandler($handler);
         $this->assertHTTPStatus(200, $req);
 
         $this->assertEquals(array(
@@ -557,9 +558,9 @@ class OutboxPostTest extends \Sabre\DAVServerTest {
 
         $req->setBody(implode("\r\n",$body));
 
-        $handler = new IMip\Mock('server@example.org');
+        $handler = new Schedule\IMip\Mock('server@example.org');
 
-        $this->caldavSchedulePlugin->setIMIPhandler($handler);
+        $this->caldavPlugin->setIMIPhandler($handler);
 
         $response = $this->request($req);
         $this->assertEquals('403 Forbidden', $response->status, 'Full body: ' . $response->body);
